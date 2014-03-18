@@ -1,5 +1,8 @@
 # go-websocket-frames #
 
+[![Build
+Status](https://drone.io/github.com/tchap/go-websocket-frames/status.png)](https://drone.io/github.com/tchap/go-websocket-frames/latest)
+
 A codec for [websocket](http://godoc.org/code.google.com/p/go.net/websocket)
 for exchanging multi-part binary messages.
 
