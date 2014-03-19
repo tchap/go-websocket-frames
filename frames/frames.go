@@ -23,7 +23,7 @@ var (
 	ErrMessageTooShort   = errors.New("message too short")
 )
 
-const maxUint32 = int(^uint32(0))
+const maxUint32 = uint64(^uint32(0))
 
 func marshal(v interface{}) (msg []byte, payloadType byte, err error) {
 	frames, ok := v.([][]byte)
@@ -31,7 +31,7 @@ func marshal(v interface{}) (msg []byte, payloadType byte, err error) {
 		return nil, ws.UnknownFrame, ws.ErrNotSupported
 	}
 
-	if len(frames) > maxUint32 {
+	if uint64(len(frames)) > maxUint32 {
 		return nil, ws.UnknownFrame, ErrTooManyFrames
 	}
 
@@ -40,7 +40,7 @@ func marshal(v interface{}) (msg []byte, payloadType byte, err error) {
 		return nil, ws.UnknownFrame, err
 	}
 	for _, frame := range frames {
-		if len(frame) > maxUint32 {
+		if uint64(len(frame)) > maxUint32 {
 			return nil, ws.UnknownFrame, ErrFrameTooLarge
 		}
 		if err := binary.Write(b, binary.BigEndian, uint32(len(frame))); err != nil {
